@@ -5,7 +5,7 @@
 ** Login   <bogard_t@epitech.net>
 **
 ** Started on  Wed Oct  8 18:00:48 2014 thomas bogard
-** Last update Fri Apr  8 21:41:47 2016 Thomas Bogard
+** Last update Thu Apr 21 15:14:41 2016 Thomas Bogard
 */
 
 # include	"sudoku.h"
@@ -21,7 +21,7 @@ static int	check_chars(char *str)
   return (1);
 }
 
-static int	count_chars(char **argv)
+static int	count_chars(char **av)
 {
   int	i;
   int	j;
@@ -33,7 +33,7 @@ static int	count_chars(char **argv)
     {
       j = -1;
       while (++j < 9)
-	if (argv[i][j] >= '1' && argv[i][j] <= '9')
+	if (av[i][j] >= '1' && av[i][j] <= '9')
 	  count++;
     }
   return (count >= 17 ? 1 : 0);
@@ -66,40 +66,25 @@ static int	resolve(char **tab, int position)
   return (0);
 }
 
-/* int	main(int argc, char **argv) */
-int	main()
+int	main(int ac, char **av)
 {
   int	i;
 
-  char *argv[11] =
-    {
-      "./sudoku",
-      "9...7....",
-      "2...9..53",
-      ".6..124..",
-      "84...1.9.",
-      "5.....8..",
-      ".31..4...",
-      "..37..68.",
-      ".9..5.741",
-      "47.......",
-      NULL
-    };
   i = 0;
-  /* if (argc != 10 || count_chars(argv) == 0) */
-  /*   fprintf(stderr, "%s\n", usage); */
-  /* else */
+  if (ac != 10 || count_chars(av) == 0)
+    fprintf(stderr, "%s\n", usage);
+  else
     {
       while (++i < 10)
 	{
-	  if (!check_chars(argv[i]))
+	  if (!check_chars(av[i]))
 	    {
 	      fprintf(stderr, "%s\n", "sudoku need 10 row");
 	      return (0);
 	    }
 	}
-      if (resolve(argv, 0))
-	display_tab(argv);
+      if (resolve(av, 0))
+	display_tab(av);
       else
 	fprintf(stderr, "%s\n", "resolve failed");
     }
